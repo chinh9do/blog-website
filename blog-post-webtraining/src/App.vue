@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <router-view />
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -18,10 +18,9 @@ export default {
 };
 </script>
 <style>
-@import "./assets/style.css";
+/* @import "./assets/style.css"; */
 
 #app {
   font-family: Arial, Helvetica, sans-serif;
-  position: relative;
 }
 </style>

@@ -4,17 +4,18 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 post-card" v-for="post in posts" :key="post.id">
-                        <div class="card" style="width: 20rem">
-                            <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
-                            <div class="card-body">
-                                <h5 class="card-title">{{ post.title }}</h5>
-                                <p class="card-text">
-                                    {{ post.shortContent }}
-                                </p>
-                                <a href="#" class="btn btn-primary">Details</a>
+                    <div class="col-md-6 col-sm- post_card" v-for="post in posts" :key="post.id">
+                        <router-link :to="{ name: 'post', params: { id: post.id } }">
+                            <div class="card" style="width: 20rem">
+                                <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text">
+                                        {{ post.shortContent }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -82,12 +83,19 @@ export default {
 };
 </script>
 <style>
-.post-card {
+.post_card {
     margin: 10px 0 20px 0;
     align-items: center;
+    background-color: beige;
+}
+
+.post_card a {
+    text-decoration: none;
+    color: #000;
 }
 
 .left_menu {
+    margin-top: 10px;
     width: 100%;
     height: 100%;
     background-color: bisque;
