@@ -1,5 +1,9 @@
 <template>
-    <div>
-        Posts here
-    </div>
+  <div class="container">
+    
+  </div>
 </template>
+<script></script>
+<style>
+
+</style>
