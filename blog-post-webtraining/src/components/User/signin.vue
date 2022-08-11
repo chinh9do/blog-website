@@ -3,21 +3,21 @@
         <Form @submit="onSubmit" :validation-schema="formSchema">
             <img src="../../assets/blogs.png" />
             <div class="form-group">
-                <Field name="userName" v-slot="{ field, errors, errorMessages }">
+                <Field name="userName" v-slot="{ field, errors, errorMessage }">
                     <input type="text" class="form-control" id="userName" placeholder="User Name" v-bind="field"
                         :class="{ 'is-invalid': errors.length !== 0 }" />
                     <div class="input_alert" v-if="errors.length !== 0">
-                        {{ errorMessages }}
+                        {{ errorMessage }}
                     </div>
                 </Field>
             </div>
 
             <div class="form-group">
-                <Field name="password" v-slot="{ field, errors, errorMessages }">
+                <Field name="password" v-slot="{ field, errors, errorMessage }">
                     <input type="password" class="form-control" id="password" placeholder="Password" v-bind="field"
                         :class="{ 'is-invalid': errors.length !== 0 }" />
                     <div class="input_alert" v-if="errors.length !== 0">
-                        {{ errorMessages }}
+                        {{ errorMessage }}
                     </div>
                 </Field>
             </div>
@@ -40,7 +40,7 @@ export default {
         return {
             formSchema: {
                 userName: yup.string().required('The user name is required'),
-                password: yup.string().required('The password is required')
+                password: yup.string().required('The password is required').min(8)
             }
         }
     },
@@ -71,7 +71,8 @@ export default {
 
 .input_alert {
     color: red;
-    font-weight: bold;
+    padding-top:5px;
     margin-bottom: 20px;
+    text-align: left;
 }
 </style>

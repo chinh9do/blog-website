@@ -1,0 +1,12 @@
+@media (max-width: 767px) {
+    .left_menu {
+        display: none;
+    }
+}
+
+.left_menu {
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: bisque;
+}

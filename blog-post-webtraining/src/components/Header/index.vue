@@ -15,7 +15,6 @@
             <li class="nav-item active">
               <router-link class="nav-link" to="/">Home</router-link>
             </li>
-
             <li class="nav-item">
               <router-link class="nav-link" to="/blogs">Blogs</router-link>
             </li>
@@ -25,6 +24,9 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/signin">Sign in</router-link>
             </li>
+            <!-- <li class="nav-item">
+              <router-link class="nav-link" to="/signout">Sign out</router-link>
+            </li> -->
           </ul>
         </div>
       </nav>
@@ -33,7 +35,7 @@
 </template>
 <style>
 header{
-  background-color: #0a0909fa;
+  background-color: #343a40;
   box-shadow: 1px 2px 2px #888888;
 }
 header a{

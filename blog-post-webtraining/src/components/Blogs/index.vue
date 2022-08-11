@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         Blogs here
     </div>
 </template>

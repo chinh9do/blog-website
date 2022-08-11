@@ -2,11 +2,39 @@
     <div class="container">
         <app-carrousel />
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6">
+                <router-link :to="{ name: 'postDetail', params: { id: 1 } }">
+                    <div class="card">
+                        <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Title</h5>
+                            <p class="card-text">
+                                aaaa
+                            </p>
+                        </div>
+                    </div>
+                </router-link>
+            </div>
+            <div class="col-md-6">
+                <router-link :to="{ name: 'postDetail', params: { id: 1 } }">
+                    <div class="card">
+                        <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Title</h5>
+                            <p class="card-text">
+                                aaaa
+                            </p>
+                        </div>
+                    </div>
+                </router-link>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 col-sm-12">
                 <div class="row">
-                    <div class="col-md-6 col-sm- post_card" v-for="post in posts" :key="post.id">
-                        <router-link :to="{ name: 'post', params: { id: post.id } }">
-                            <div class="card" style="width: 20rem">
+                    <div class="col-md-6 post_card" v-for="post in posts" :key="post.id">
+                        <router-link :to="{ name: 'postDetail', params: { id: post.id } }">
+                            <div class="card">
                                 <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
                                 <div class="card-body">
                                     <h5 class="card-title">{{ post.title }}</h5>
@@ -83,6 +111,11 @@ export default {
 };
 </script>
 <style>
+a {
+    text-decoration: none;
+    color: #000;
+}
+
 .post_card {
     margin: 10px 0 20px 0;
     align-items: center;
@@ -92,12 +125,5 @@ export default {
 .post_card a {
     text-decoration: none;
     color: #000;
-}
-
-.left_menu {
-    margin-top: 10px;
-    width: 100%;
-    height: 100%;
-    background-color: bisque;
 }
 </style>
