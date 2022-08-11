@@ -24,21 +24,32 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/signin">Sign in</router-link>
             </li>
-            <!-- <li class="nav-item">
-              <router-link class="nav-link" to="/signout">Sign out</router-link>
-            </li> -->
+            <li class="nav-item">
+              <a @click="signOut">Sign out</a>
+            </li>
           </ul>
         </div>
       </nav>
     </div>
   </header>
 </template>
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  methods: {
+    ...mapActions('auth', ['signOut']),
+  },
+}
+</script>
 <style>
-header{
+header {
   background-color: #343a40;
   box-shadow: 1px 2px 2px #888888;
+  font-size: 16px;
 }
-header a{
+
+header a {
   color: #d9d9d9 !important;
 }
 

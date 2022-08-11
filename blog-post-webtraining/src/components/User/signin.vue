@@ -30,6 +30,7 @@
 <script>
 import { Field, Form } from 'vee-validate'
 import * as yup from 'yup'
+import { mapActions } from 'vuex'
 
 export default {
     components: {
@@ -46,9 +47,11 @@ export default {
     },
 
     methods: {
+        ...mapActions('auth', ['signIn']),
         onSubmit(values, { resetForm }) {
             console.log(values, 'SIGN IN')
 
+            this.signIn(this.formSchema);
             resetForm();
         }
     },
@@ -56,7 +59,7 @@ export default {
 </script>
 <style>
 .login_form {
-    width: 350px;
+    max-width: 350px;
     margin-top: 50px;
     padding: 30px;
     border-radius: 3px;
@@ -71,7 +74,7 @@ export default {
 
 .input_alert {
     color: red;
-    padding-top:5px;
+    padding-top: 5px;
     margin-bottom: 20px;
     text-align: left;
 }

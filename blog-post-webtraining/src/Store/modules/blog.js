@@ -1,4 +1,5 @@
 const blogsModule = {
+    namespaced: true,
     state(){
 
     }

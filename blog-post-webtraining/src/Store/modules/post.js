@@ -1,4 +1,5 @@
 const postsModule = {
+    namespaced: true,
     state(){
 
     }

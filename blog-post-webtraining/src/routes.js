@@ -4,6 +4,7 @@ import Blog from "./components/Blogs";
 import Post from "./components/Posts";
 import PostDetail from "./components/Posts/postDetail";
 import Signin from "./components/User/signin";
+import store from "./store";
 
 const routes = createRouter({
   history: createWebHistory(),
@@ -17,5 +18,9 @@ const routes = createRouter({
     // { path: "/login", name: "login", component: NotFound },
   ],
 });
+
+// routes.beforeEach((to, from, next) => {
+//   store.dispatch()
+// })
 
 export default routes;

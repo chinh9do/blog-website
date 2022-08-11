@@ -117,9 +117,8 @@ a {
 }
 
 .post_card {
-    margin: 10px 0 20px 0;
+    margin: .5rem 0 1rem 0;
     align-items: center;
-    background-color: beige;
 }
 
 .post_card a {

@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
-import AuthModule from "./auth";
-import BlogsModule from "./blogs";
-import PostsModule from "./posts";
+import AuthModule from "./modules/auth";
+import BlogsModule from "./modules/blog";
+import PostsModule from "./modules/post";
 
 const store = createStore({
   modules: {
@@ -9,6 +9,9 @@ const store = createStore({
     blog: BlogsModule,
     postsModule: PostsModule,
   },
+  state() {
+
+  }
 });
 
 export default store;
