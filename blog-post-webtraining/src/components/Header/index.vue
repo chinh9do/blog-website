@@ -21,11 +21,11 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/posts">Posts</router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="!loggedIn" class="nav-item">
               <router-link class="nav-link" to="/signin">Sign in</router-link>
             </li>
-            <li class="nav-item">
-              <a @click="signOut">Sign out</a>
+            <li v-else class="nav-item">
+              <div class="nav-link btn-signOut" @click="signOut">Sign out</div>
             </li>
           </ul>
         </div>
@@ -34,9 +34,12 @@
   </header>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
+  computed: {
+    ...mapState('auth', ['loggedIn']),
+  },
   methods: {
     ...mapActions('auth', ['signOut']),
   },
@@ -57,4 +60,9 @@ header a {
   width: 100%;
   padding-bottom: 0;
 }
+.menu_top .btn-signOut {
+  color: #d9d9d9 !important;
+  cursor: pointer;
+}
+
 </style>

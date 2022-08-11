@@ -1,55 +1,62 @@
 import axios from "axios";
 import router from "@/routes";
+import AuthService from "../../services/auth.service";
 
 const authModule = {
-    namespaced: true,
-    state() {
-        return {
-            token: '',
-            refreshToken: ''
-        }
+  namespaced: true,
+  state() {
+    return {
+      loggedIn: false,
+      token: "",
+      refreshToken: "",
+    };
+  },
+  mutations: {
+    loginSuccess(state) {
+      state.status.loggedIn = true;
     },
-    mutations: {
-        authUSer(state, payload) {
-            state.token = payload.token;
-            state.refreshToken = payload.refreshToken
-        },
-        resetAuth(state) {
-            state.token = null;
-            state.refreshToken = null
-        }
+    loginFailure(state) {
+      state.status.loggedIn = false;
     },
-    actions: {
-        removeToken() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('refreshToken');
-        },
-        setToken(context, payload) {
-            localStorage.setItem('token', payload.token);
-            localStorage.setItem('refreshToken', payload.refreshToken);
-        },
-
-        signIn(context, payload) {
-            console.log(payload)
-            const response = { token: '111', refreshToken: '2222' }
-            context.commit('authUser', response.data);
-            context.dispatch('setToken', response.data)
-            // axios.post('', {})
-            //     .then((reposne) => {
-            //         console.log(response.data);
-            //         context.commit('authUser', reposne.data);
-            //         context.dispatch('setToken', reposne.data)
-            //     })
-            //     .catch(error => {
-            //         console.log(error)
-            //     });
-        },
-        signOut(context, payload) {
-            context.commit('resetAuth');
-            context.dispatch('removeToken');
-            router.push('/');
-        }
-    }
+    logout(state) {
+      state.status.loggedIn = false;
+    },
+    refreshToken(state, accessToken) {
+      state.status.loggedIn = true;
+      state.token = accessToken;
+    },
+    authUSer(state, payload) {
+      state.token = payload.token;
+      state.refreshToken = payload.refreshToken;
+    },
+    resetAuth(state) {
+      state.token = null;
+      state.refreshToken = null;
+    },
+  },
+  actions: {
+    async signIn({ commit, dispatch }, user) {
+      console.log(user);
+      try {
+        const response = await AuthService.login(user);
+        console.log(response.data);
+        commit("authUser", response.data);
+        commit("loginSuccess");
+        dispatch("setToken", response.data);
+        router.push("/");
+      } catch (_error) {
+        commit("loginFailure");
+        console.log(_error);
+      }
+    },
+    signOut({ commit }) {
+      AuthService.logout();
+      commit("logout");
+    },
+    refreshToken({ commit }, accessToken) {
+      commit("refreshToken", accessToken);
+    },
+  },
 };
 
 export default authModule;

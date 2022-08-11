@@ -4,7 +4,6 @@ import Blog from "./components/Blogs";
 import Post from "./components/Posts";
 import PostDetail from "./components/Posts/postDetail";
 import Signin from "./components/User/signin";
-import store from "./store";
 
 const routes = createRouter({
   history: createWebHistory(),
