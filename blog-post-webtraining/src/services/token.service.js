@@ -1,11 +1,16 @@
 import { jwtDecrypt } from "@/shared/jwtHelper";
 class TokenService {
-  getLocalRefreshToken() {
+
+  getRefreshToken() {
     return localStorage.getItem("refreshToken");
   }
 
-  getLocalAccessToken() {
+  getAccessToken() {
     return localStorage.getItem("token");
+  }
+
+  getAuth() {
+    return { token: getAccessToken(), refreshToken: getRefreshToken() }
   }
 
   updateLocalAccessToken(token) {
@@ -13,20 +18,20 @@ class TokenService {
   }
 
   getExpiredDate() {
-    return jwtDecrypt(this.getLocalAccessToken())?.exp;
+    return jwtDecrypt(this.getAccessToken())?.exp;
   }
 
   getUserId() {
-    return jwtDecrypt(this.getLocalAccessToken())?.userId;
+    return jwtDecrypt(this.getAccessToken())?.userId;
   }
 
   getUserName() {
-    return jwtDecrypt(this.getLocalAccessToken())?.userName;
+    return jwtDecrypt(this.getAccessToken())?.userName;
   }
 
-  setToken(payload) {
+  saveAuth(payload) {
     console.log(JSON.stringify(payload));
-    localStorage.setItem("token", payload.token);
+    localStorage.setItem("token", payload.accessToken);
     localStorage.setItem("refreshToken", payload.refreshToken);
   }
 

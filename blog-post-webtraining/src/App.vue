@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header></Header>
+    <!-- <Loader /> -->
     <router-view />
     <!-- <Footer></Footer> -->
   </div>
@@ -9,11 +10,13 @@
 <script>
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Loader from "./components/Utils/loader";
 
 export default {
   components: {
     Header,
     Footer,
+    Loader
   },
 };
 </script>

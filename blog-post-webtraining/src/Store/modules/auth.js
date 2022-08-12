@@ -1,6 +1,6 @@
-import axios from "axios";
 import router from "@/routes";
-import AuthService from "../../services/auth.service";
+import AuthService from "@/services/auth.service";
+import TokenService from "@/services/token.service";
 
 const authModule = {
   namespaced: true,
@@ -8,8 +8,17 @@ const authModule = {
     return {
       loggedIn: false,
       token: "",
+      error: [false, ''],
       refreshToken: "",
     };
+  },
+  getters: {
+    getAuth(state) {
+      return { token: state.token, refreshToken: state.refreshToken }
+    },
+    getError(state) {
+      return state.error
+    }
   },
   mutations: {
     loginSuccess(state) {
@@ -25,38 +34,42 @@ const authModule = {
       state.status.loggedIn = true;
       state.token = accessToken;
     },
-    authUSer(state, payload) {
-      state.token = payload.token;
+    saveAuthData(state, payload) {
+      TokenService.saveAuth(payload);
+  
+      state.token = payload.accessToken;
       state.refreshToken = payload.refreshToken;
     },
     resetAuth(state) {
       state.token = null;
       state.refreshToken = null;
     },
+    setError(state, message) {
+      state.error = [true, message]
+    }
   },
   actions: {
-    async signIn({ commit, dispatch }, user) {
-      console.log(user);
-      try {
-        const response = await AuthService.login(user);
+    async signIn({ commit }, user) {
+      AuthService.login(user).then((response) => {
         console.log(response.data);
-        commit("authUser", response.data);
         commit("loginSuccess");
-        dispatch("setToken", response.data);
+        commit("saveAuthData", response.data);
         router.push("/");
-      } catch (_error) {
+      }).catch(error => {
         commit("loginFailure");
-        console.log(_error);
-      }
+        commit('setError', error?.message)
+        console.log(error);
+      });
     },
     signOut({ commit }) {
-      AuthService.logout();
+      TokenService.removeToken();
       commit("logout");
+      commit("resetAuth");
     },
     refreshToken({ commit }, accessToken) {
       commit("refreshToken", accessToken);
     },
-  },
+  }
 };
 
 export default authModule;
