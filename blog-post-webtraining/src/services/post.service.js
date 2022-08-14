@@ -9,8 +9,8 @@ class PostService {
         return api.get(`/blogs/posts/${blogId}`);
     }
 
-    createPost(blogId, post) {
-        return api.post(`/blogs/posts/${blogId}`, post)
+    createPost(post) {
+        return api.post(`/blogs/posts/${post.blogId}`, post)
     }
 
     updatePost(id, blog) {

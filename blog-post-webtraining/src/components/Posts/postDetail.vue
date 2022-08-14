@@ -12,31 +12,35 @@
             </div>
             <hr />
             <h1> {{ post.title }}</h1>
-            <div class="editor" v-html="post.content"></div>
+            <div class="editor" v-html="post.shortContent"></div>
         </div>
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     data() {
         return {
-            post:
-            {
-                id: 1,
-                title: "Post title",
-                shortContent:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                content: `<p></p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>`
-            }
+            post: {}
         }
     },
+    methods: {
+        ...mapActions('post', ['getPostById'])
+    },
+    mounted() {
+        this.getPostById(this.$route.params.id)
+            .then((post) => {
+                if (post) {
+                    this.post = post;
+                } else {
+                    this.$router.push({ name: '404' });
+                }
+            })
+    }
 }
 </script>
 <style>
-.p_top{
-    padding-top: 20px;
-}
-
 .post_page {
     padding-bottom: 100px;
 }
@@ -65,5 +69,4 @@ export default {
 .post_page .post_content .editor {
     font-size: 17px;
 }
-
 </style>

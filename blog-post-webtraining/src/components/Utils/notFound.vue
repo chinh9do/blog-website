@@ -1,3 +1,3 @@
 <template>
-    <div>Not Found</div>
+    <div class="container p_top">Not Found</div>
 </template>

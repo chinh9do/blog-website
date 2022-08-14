@@ -2,6 +2,7 @@
     <div class="container">
         <app-carrousel />
         <div class="row">
+            <!-- blogs -->
             <div class="col-md-6">
                 <router-link :to="{ name: 'postDetail', params: { id: 1 } }">
                     <div class="card">
@@ -30,9 +31,10 @@
             </div>
         </div>
         <div class="row">
+            <!-- All posts -->
             <div class="col-md-9 col-sm-12">
                 <div class="row">
-                    <div class="col-md-6 post_card" v-for="post in posts" :key="post.id">
+                    <div class="col-md-6 post-card" v-for="post in allPosts" :key="post.id">
                         <router-link :to="{ name: 'postDetail', params: { id: post.id } }">
                             <div class="card">
                                 <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
@@ -48,7 +50,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="left_menu">Menu nè</div>
+                <div class="left-menu"> Hot posts</div>
             </div>
         </div>
     </div>
@@ -56,6 +58,7 @@
 
 <script>
 import appCarrousel from "../Utils/carousel";
+import { mapGetters } from "vuex";
 
 export default {
     components: {
@@ -63,51 +66,12 @@ export default {
     },
     data() {
         return {
-            posts: [
-                {
-                    id: 1,
-                    title: "Post title",
-                    shortContent:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                },
-                {
-                    id: 1,
-                    title: "Post title",
-                    shortContent:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                },
-                {
-                    id: 1,
-                    title: "Post title",
-                    shortContent:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                },
-                {
-                    id: 1,
-                    title: "Post title",
-                    shortContent:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                },
-                {
-                    id: 1,
-                    title: "Post title",
-                    shortContent:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                },
-                {
-                    id: 1,
-                    title: "Post title",
-                    shortContent:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                },
-            ],
+
         };
     },
-    methods: {
-        getData() {
-            // axios.get()
-        },
-    },
+    computed: {
+        ...mapGetters('post', { allPosts: 'getPosts' })
+    }
 };
 </script>
 <style>
@@ -116,12 +80,12 @@ a {
     color: #000;
 }
 
-.post_card {
+.post-card {
     margin: .5rem 0 1rem 0;
     align-items: center;
 }
 
-.post_card a {
+.post-card a {
     text-decoration: none;
     color: #000;
 }

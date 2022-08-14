@@ -2,6 +2,10 @@ import api from './api';
 
 class BlogService {
   getAll() {
+    return api.get('/blogs');
+  }
+
+  getByUserId(userId) {
     return api.get(`/blogs/${userId}`);
   }
 
@@ -13,8 +17,8 @@ class BlogService {
     return api.post('/blogs', blog)
   }
 
-  updateBlog(id, blog) {
-    return api.put(`/blogs/${id}`, blog)
+  updateBlog(blog) {
+    return api.put(`/blogs/${blog.id}`, blog)
   }
 
   deleteBlog(id) {

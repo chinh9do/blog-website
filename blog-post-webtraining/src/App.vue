@@ -11,6 +11,7 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Loader from "./components/Utils/loader";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -18,6 +19,21 @@ export default {
     Footer,
     Loader
   },
+  computed: {
+    ...mapGetters({ toastMsg: 'notify/getToastMsg' })
+  },
+  watch: {
+    toastMsg(toastMsg) {
+      if (toastMsg[0] == true) {
+        if (toastMsg[2] === 'error') {
+          this.$toast.error(toastMsg[1])
+        }
+        else {
+          this.$toast.success(toastMsg[1])
+        }
+      }
+    }
+  }
 };
 </script>
 <style>
