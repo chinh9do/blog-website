@@ -1,6 +1,7 @@
 import router from "@/routes";
 import AuthService from "@/services/auth.service";
 import TokenService from "@/services/token.service";
+import { errorNotify } from "@/shared/notifications";
 
 const authModule = {
   namespaced: true,
@@ -8,17 +9,16 @@ const authModule = {
     return {
       loggedIn: false,
       token: "",
-      error: [false, ''],
       refreshToken: "",
     };
   },
   getters: {
     getAuth(state) {
-      return { token: state.token, refreshToken: state.refreshToken }
+      return { token: state.token, refreshToken: state.refreshToken };
     },
     getError(state) {
-      return state.error
-    }
+      return state.error;
+    },
   },
   mutations: {
     loginSuccess(state) {
@@ -36,7 +36,7 @@ const authModule = {
     },
     saveAuthData(state, payload) {
       TokenService.saveAuth(payload);
-  
+
       state.token = payload.accessToken;
       state.refreshToken = payload.refreshToken;
     },
@@ -44,22 +44,23 @@ const authModule = {
       state.token = null;
       state.refreshToken = null;
     },
-    setError(state, message) {
-      state.error = [true, message]
-    }
   },
   actions: {
-    async signIn({ commit }, user) {
-      AuthService.login(user).then((response) => {
-        console.log(response.data);
-        commit("loginSuccess");
-        commit("saveAuthData", response.data);
-        router.push("/");
-      }).catch(error => {
-        commit("loginFailure");
-        commit('setError', error?.message)
-        console.log(error);
-      });
+    signIn({ commit }, user) {
+      AuthService.login(user)
+        .then((response) => {
+          console.log(response.data);
+          commit("loginSuccess");
+          commit("saveAuthData", response.data);
+          router.push("/");
+        })
+        .catch((error) => {
+          errorNotify(commit, error.message);
+
+          console.log("error", error);
+
+          commit("loginFailure");
+        });
     },
     signOut({ commit }) {
       TokenService.removeToken();
@@ -69,7 +70,7 @@ const authModule = {
     refreshToken({ commit }, accessToken) {
       commit("refreshToken", accessToken);
     },
-  }
+  },
 };
 
 export default authModule;

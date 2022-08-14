@@ -4,8 +4,8 @@ import Blog from "./components/Blogs";
 import Post from "./components/Posts";
 import PostDetail from "./components/Posts/postDetail";
 import Signin from "./components/User/signin";
-import NotFound from './components/Utils/notFound'
-import Dashboard from './components/Dashboard'
+import NotFound from "./components/Utils/notFound";
+import Dashboard from "./components/Dashboard";
 import store from "./store";
 
 const routes = createRouter({
@@ -13,22 +13,21 @@ const routes = createRouter({
   routes: [
     { path: "/", name: "home", component: Home },
     { path: "/blogs", name: "blogs", component: Blog },
-    { path: "/blog:id", name: "blog", component: Blog },
+    { path: "/blog/:id", name: "blog", component: Blog },
     { path: "/posts", name: "posts", component: Post },
-    { path: "/post:id", name: "postDetail", component: PostDetail },
+    { path: "/post/:id", name: "postDetail", component: PostDetail },
     { path: "/signin", name: "signin", component: Signin },
-    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
-    { path:'/:notFound(.*)', component: NotFound }
+    { path: "/dashboard", name: "dashboard", component: Dashboard, meta: { requiresAuth: true } },
+    { path: "/:notFound(.*)*", name: "404", component: NotFound },
   ],
 });
 
 routes.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.state['user/loggedIn']) {
-    next('/signin');
+  if (to.meta.requiresAuth && !store.state["user/loggedIn"]) {
+    next("/signin");
   } else {
-    next()
+    next();
   }
 });
-
 
 export default routes;
