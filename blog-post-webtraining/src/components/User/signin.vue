@@ -40,6 +40,7 @@ export default {
     data() {
         return {
             formSchema: {
+                //check ko chứa space
                 userName: yup.string().required('The user name is required'),
                 password: yup.string().required('The password is required').min(8)
             }
