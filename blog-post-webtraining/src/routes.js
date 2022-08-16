@@ -29,25 +29,25 @@ const routes = createRouter({
       component: Dashboard,
       meta: { requiresAuth: true },
       children: [
-        { path: "/posts", name: "user-posts", component: UserPosts },
-        { path: "/blogs", name: "user-blogs", component: UserBlogs },
+        { path: "posts", name: "user-posts", component: UserPosts },
+        { path: "blogs", name: "user-blogs", component: UserBlogs },
         {
-          path: "/blog/create",
+          path: "blog/create",
           name: "user-create-blog",
           component: UserAddBlog,
         },
         {
-          path: "/blog/update/:id",
+          path: "blog/update/:id",
           name: "user-update-blog",
           component: UserUpdateBlog,
         },
         {
-          path: "/post/create",
+          path: "post/create",
           name: "user-create-post",
           component: UserAddPost,
         },
         {
-          path: "/post/update/:id",
+          path: "post/update/:id",
           name: "user-update-post",
           component: UserUpdatePost,
         },
@@ -58,7 +58,7 @@ const routes = createRouter({
 });
 
 routes.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.state["user/loggedIn"]) {
+  if (to.meta.requiresAuth && !store.getters["auth/getLoggedInStatus"]) {
     next("/signin");
   } else {
     next();

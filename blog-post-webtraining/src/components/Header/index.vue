@@ -21,12 +21,16 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/posts">Posts</router-link>
             </li>
+            <li v-if="loggedIn" class="nav-item">
+              <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
+            </li>
             <li v-if="!loggedIn" class="nav-item">
               <router-link class="nav-link" to="/signin">Sign in</router-link>
             </li>
             <li v-else class="nav-item">
               <div class="nav-link btn-signOut" @click="signOut">Sign out</div>
             </li>
+
           </ul>
         </div>
       </nav>
@@ -60,9 +64,9 @@ header a {
   width: 100%;
   padding-bottom: 0;
 }
+
 .menu_top .btn-signOut {
   color: #d9d9d9 !important;
   cursor: pointer;
 }
-
 </style>

@@ -7,12 +7,15 @@ const authModule = {
   namespaced: true,
   state() {
     return {
-      loggedIn: false,
+      loggedIn: true,
       token: "",
       refreshToken: "",
     };
   },
   getters: {
+    getLoggedInStatus(state) {
+      return state.loggedIn;
+    },
     getAuth(state) {
       return { token: state.token, refreshToken: state.refreshToken };
     },
@@ -22,16 +25,16 @@ const authModule = {
   },
   mutations: {
     loginSuccess(state) {
-      state.status.loggedIn = true;
+      state.loggedIn = true;
     },
     loginFailure(state) {
-      state.status.loggedIn = false;
+      state.loggedIn = false;
     },
     logout(state) {
-      state.status.loggedIn = false;
+      state.loggedIn = false;
     },
     refreshToken(state, accessToken) {
-      state.status.loggedIn = true;
+      state.loggedIn = true;
       state.token = accessToken;
     },
     saveAuthData(state, payload) {

@@ -41,6 +41,7 @@ export default {
         return {
             formSchema: {
                 //check ko chứa space
+                // Check after refresh token -> có tự động gọi lại request trước đó k
                 userName: yup.string().required('The user name is required'),
                 password: yup.string().required('The password is required').min(8)
             }

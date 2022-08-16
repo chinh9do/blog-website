@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Header v-if="isShowHeader"></Header>
     <!-- <Loader /> -->
     <router-view />
     <!-- <Footer></Footer> -->
@@ -20,7 +20,10 @@ export default {
     Loader
   },
   computed: {
-    ...mapGetters({ toastMsg: 'notify/getToastMsg' })
+    ...mapGetters({ toastMsg: 'notify/getToastMsg' }),
+    isShowHeader() {
+      return !this.$route.path?.includes('dashboard');
+    }
   },
   watch: {
     toastMsg(toastMsg) {
