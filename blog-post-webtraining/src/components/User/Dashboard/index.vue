@@ -5,44 +5,23 @@
                 <div class="dashboard-sidebar">
                     <ul class="nav flex-column">
                         <li class="nav-item logo">
-                            <a class="nav-link active" href="#">
-                                Blog.com <span class="sr-only">(current)</span>
-                            </a>
+                            <router-link class="nav-link active" to="/">Blog.com</router-link>
                             <hr class="line-split" />
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Blogs
-                            </a>
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Create Blog
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Update Blog
-                                    </a>
-                                </li>
-                            </ul>
+                            <router-link class="nav-link" :to="{ name: 'user-blogs' }">List Blogs</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Posts
-                            </a>
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Create Post
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Update Post
-                                    </a>
-                                </li>
-                            </ul>
+                            <router-link class="nav-link" :to="{ name: 'user-create-blog' }">Create Blog
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{ name: 'user-blogs' }">List Posts
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{ name: 'user-create-post' }">Create Post
+                            </router-link>
                         </li>
                     </ul>
 
@@ -50,18 +29,20 @@
             </div>
             <main class="col-md-10 ml-sm-auto px-4">
                 <div>
-                    content
+                    <router-view></router-view>
                 </div>
-
             </main>
         </div>
     </div>
 </template>
 <style>
+.sidebar{
+ height: 100vh;
+}
+
 .dashboard-sidebar {
     position: relative;
     top: 0;
-    height: 100vh;
     padding-top: .5rem;
     /* overflow-x: hidden;
     overflow-y: auto; */
@@ -81,7 +62,4 @@
     color: #d9d9d9 !important;
 }
 
-.dashboard-sidebar .sub-menu {
-    padding-left: 20px;
-}
 </style>

@@ -40,9 +40,9 @@ export default {
     data() {
         return {
             formSchema: {
-                //check ko chứa space
+                // check ko chứa space
                 // Check after refresh token -> có tự động gọi lại request trước đó k
-                userName: yup.string().required('The user name is required'),
+                userName: yup.string().required('The user name is required'), //.matches('/^\S*$/',`Don't allow have space`),
                 password: yup.string().required('The password is required').min(8)
             }
         }
@@ -51,9 +51,7 @@ export default {
     methods: {
         ...mapActions('auth', ['signIn']),
         onSubmit(values, { resetForm }) {
-            console.log(values, 'SIGN IN')
-
-            this.signIn(this.formSchema);
+            this.signIn(values);
             resetForm();
         }
     },

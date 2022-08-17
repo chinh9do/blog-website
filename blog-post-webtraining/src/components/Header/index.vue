@@ -19,7 +19,7 @@
               <router-link class="nav-link" to="/blogs">Blogs</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/posts">Posts</router-link>
+              <router-link class="nav-link" :to="{name: 'posts'}">Posts</router-link>
             </li>
             <li v-if="loggedIn" class="nav-item">
               <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
