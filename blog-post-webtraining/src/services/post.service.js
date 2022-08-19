@@ -10,15 +10,15 @@ class PostService {
     }
 
     createPost(post) {
-        return api.post(`/blogs/posts/${post.blogId}`, post)
+        return api.post(`blogs/posts/${post.blogId}`, post)
     }
 
     updatePost(id, blog) {
-        return api.put(`/blogs/${id}`, blog)
+        return api.put(`blogs/${id}`, blog)
     }
 
     deletePost(blogId, postId) {
-        return api.delete(`/blogs/${blogId}/posts/${postId}`)
+        return api.delete(`blogs/${blogId}/posts/${postId}`)
     }
 }
 

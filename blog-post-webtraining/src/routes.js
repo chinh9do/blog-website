@@ -58,11 +58,13 @@ const routes = createRouter({
 });
 
 routes.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.getters["auth/getLoggedInStatus"]) {
-    next("/signin");
-  } else {
-    next();
-  }
+  store.dispatch('auth/autoLogin').then(() => {
+    if (to.meta.requiresAuth && !store.getters["auth/getLoggedInStatus"]) {
+      next("/signin");
+    } else {
+      next();
+    }
+  });
 });
 
 export default routes;

@@ -10,7 +10,7 @@ class TokenService {
   }
 
   getAuth() {
-    return { token: getAccessToken(), refreshToken: getRefreshToken() }
+    return { accessToken: this.getAccessToken(), refreshToken: this.getRefreshToken() }
   }
 
   updateLocalAccessToken(token) {

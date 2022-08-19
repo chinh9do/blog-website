@@ -2,9 +2,7 @@ import api from "./api";
 
 class AuthService {
   async login(userModel) {
-    const response = await api.post("/user/login", userModel);
-
-    return response.data;
+    return await api.post("users/login", userModel);
   }
 }
 

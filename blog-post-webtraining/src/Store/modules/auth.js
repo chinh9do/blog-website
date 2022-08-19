@@ -7,7 +7,7 @@ const authModule = {
   namespaced: true,
   state() {
     return {
-      loggedIn: true,
+      loggedIn: false,
       token: "",
       refreshToken: "",
     };
@@ -17,7 +17,7 @@ const authModule = {
       return state.loggedIn;
     },
     getAuth(state) {
-      return { token: state.token, refreshToken: state.refreshToken };
+      return { accessToken: state.token, refreshToken: state.refreshToken };
     },
     getError(state) {
       return state.error;
@@ -33,13 +33,7 @@ const authModule = {
     logout(state) {
       state.loggedIn = false;
     },
-    refreshToken(state, accessToken) {
-      state.loggedIn = true;
-      state.token = accessToken;
-    },
-    saveAuthData(state, payload) {
-      TokenService.saveAuth(payload);
-
+    saveAuth(state, payload) {
       state.token = payload.accessToken;
       state.refreshToken = payload.refreshToken;
     },
@@ -52,9 +46,8 @@ const authModule = {
     signIn({ commit }, user) {
       AuthService.login(user)
         .then((response) => {
-          console.log(response.data);
           commit("loginSuccess");
-          commit("saveAuthData", response.data);
+          TokenService.saveAuth(response.data);
           router.push("/");
         })
         .catch((error) => {
@@ -69,10 +62,22 @@ const authModule = {
       TokenService.removeToken();
       commit("logout");
       commit("resetAuth");
+      router.push('/');
     },
-    refreshToken({ commit }, accessToken) {
-      commit("refreshToken", accessToken);
+    refreshToken({ commit }, payload) {
+      commit("loginSuccess");
+      commit("saveAuth", payload);
+      TokenService.saveAuth(payload.data);
     },
+
+    autoLogin({ commit }) {
+      const auth = TokenService.getAuth();
+      // console.log('okokokook', auth)
+      if (auth.accessToken !== null) {
+        commit("loginSuccess");
+        commit('saveAuth', auth);
+      }
+    }
   },
 };
 

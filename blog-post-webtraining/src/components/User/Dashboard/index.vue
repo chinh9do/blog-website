@@ -9,44 +9,38 @@
                             <hr class="line-split" />
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'user-blogs' }">List Blogs</router-link>
+                            <router-link class="nav-link" :to="{ name: 'user-blogs' }">Blogs</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'user-create-blog' }">Create Blog
+                            <router-link class="nav-link" :to="{ name: 'user-posts' }">Posts
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'user-blogs' }">List Posts
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'user-create-post' }">Create Post
+                            <router-link class="nav-link" :to="{ name: 'signin' }"> Sign In
                             </router-link>
                         </li>
                     </ul>
 
                 </div>
             </div>
-            <main class="col-md-10 ml-sm-auto px-4">
-                <div>
-                    <router-view></router-view>
-                </div>
+            <main class="col-md-10">
+                <router-view></router-view>
             </main>
         </div>
     </div>
 </template>
 <style>
-.sidebar{
- height: 100vh;
+.sidebar {
+    height: 100vh;
 }
 
 .dashboard-sidebar {
     position: relative;
     top: 0;
     padding-top: .5rem;
-    /* overflow-x: hidden;
-    overflow-y: auto; */
-    font-size: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: .85rem;
     background-color: #343a40;
 }
 
@@ -62,4 +56,7 @@
     color: #d9d9d9 !important;
 }
 
+.main-content {
+    background-color: #efefef;
+}
 </style>

@@ -3,7 +3,7 @@
         <Form @submit="onSubmit" :validation-schema="formSchema">
             <img src="../../assets/blogs.png" />
             <div class="form-group">
-                <Field name="userName" v-slot="{ field, errors, errorMessage }">
+                <Field name="userName" value="chinh" v-slot="{ field, errors, errorMessage }">
                     <input type="text" class="form-control" id="userName" placeholder="User Name" v-bind="field"
                         :class="{ 'is-invalid': errors.length !== 0 }" />
                     <div class="input_alert" v-if="errors.length !== 0">
@@ -13,7 +13,7 @@
             </div>
 
             <div class="form-group">
-                <Field name="password" v-slot="{ field, errors, errorMessage }">
+                <Field name="password" value="123123123" v-slot="{ field, errors, errorMessage }">
                     <input type="password" class="form-control" id="password" placeholder="Password" v-bind="field"
                         :class="{ 'is-invalid': errors.length !== 0 }" />
                     <div class="input_alert" v-if="errors.length !== 0">

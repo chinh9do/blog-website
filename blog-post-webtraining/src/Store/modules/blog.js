@@ -1,4 +1,5 @@
 import BlogService from "@/services/blog.service";
+import TokenService from "@/services/token.service";
 import { errorNotify, successNotify } from "@/shared/notifications";
 
 const blogsModule = {
@@ -21,8 +22,15 @@ const blogsModule = {
   actions: {
     async getBlogs({ commit }) {
       try {
-        const blogs = await BlogService.getAll();
-        commit("setBlogs", blogs);
+        return await BlogService.getAll();
+        // commit("setBlogs", blogs);
+      } catch (error) {
+        errorNotify(commit, error.message);
+      }
+    },
+    async getBlogById({ commit }, blogId) {
+      try {
+        return await BlogService.getById(blogId);
       } catch (error) {
         errorNotify(commit, error.message);
       }
@@ -37,6 +45,7 @@ const blogsModule = {
     // },
     async addBlog({ commit }, blog) {
       try {
+        blog.userId = TokenService.getUserId();
         await BlogService.createBlog(blog);
         // TODO
         successNotify(commit);
