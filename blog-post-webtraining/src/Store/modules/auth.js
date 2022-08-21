@@ -47,14 +47,12 @@ const authModule = {
       AuthService.login(user)
         .then((response) => {
           commit("loginSuccess");
+          commit("saveAuth", response.data);
           TokenService.saveAuth(response.data);
-          router.push("/");
+          router.push("/dashboard");
         })
         .catch((error) => {
           errorNotify(commit, error.message);
-
-          console.log("error", error);
-
           commit("loginFailure");
         });
     },
@@ -62,7 +60,7 @@ const authModule = {
       TokenService.removeToken();
       commit("logout");
       commit("resetAuth");
-      router.push('/');
+      router.push('/signin');
     },
     refreshToken({ commit }, payload) {
       commit("loginSuccess");
@@ -72,10 +70,10 @@ const authModule = {
 
     autoLogin({ commit }) {
       const auth = TokenService.getAuth();
-      // console.log('okokokook', auth)
       if (auth.accessToken !== null) {
         commit("loginSuccess");
         commit('saveAuth', auth);
+        TokenService.saveAuth(auth);
       }
     }
   },

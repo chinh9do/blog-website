@@ -1,11 +1,11 @@
 <template>
     <div>
         <dashboard-title :title="'Create blog'" />
-        <div class="">
+        <div v-if="blog" class="">
             <Form @submit="onSubmit" :validation-schema="blogSchema">
                 <div class="form-group">
-                    <Field name="blogName" :value="blog.blogName" v-slot="{ field, errors }">
-                        <input type="text" class="form-control" id="blogName" placeholder="Blog Name" v-bind="field"
+                    <Field name="name" v-model="blog.name" v-slot="{ field, errors }">
+                        <input type="text" class="form-control" id="name" placeholder="Blog Name" v-bind="field"
                             :class="{ 'is-invalid': errors.length !== 0 }" />
                         <div class="input_alert" v-if="errors.length !== 0">
                             {{ errors[0] }}
@@ -23,43 +23,53 @@
 import { Field, Form } from 'vee-validate'
 import DashboardTitle from '@/components/Utils/dashboardTitle';
 import * as yup from 'yup'
+import TokenService from '@/services/token.service';
 
 export default {
     components: { DashboardTitle, Field, Form },
     data() {
         return {
-            blog: { blogName: '' },
+            blog: null,
             blogSchema: {
-                blogName: yup.string().required('Blog Name is required'), //.matches('/^\S*$/',`Don't allow have space`),
-                userId: yup.string()
+                name: yup.string().required('Blog Name is required'), //.matches('/^\S*$/',`Don't allow have space`),
+                userId: yup.string(),
+                id: yup.string()
             }
         }
     },
     methods: {
         onSubmit(values) {
-            this.$store.dispatch('blog/updateBlog', { values })
+            values.userId = TokenService.getUserId();
+            values.id = this.$route.params.id;
+            console.log('s',values);
+
+            this.$store.dispatch('blog/updateBlog', values)
         },
-        getBlog(id) {
+        async getBlog(id) {
+            // const response = await this.$store.dispatch('blog/getBlogById', id)
+            // // console.log(response);
+            // this.blog = response;
             this.$store.dispatch('blog/getBlogById', id)
-                .then((blog) => {
-                    if (blog) {
-                        console.log('ok');
-                        this.blog = blog;
+                .then((response) => {
+                    if (response.data) {
+                        this.blog = response.data //JSON.parse(JSON.stringify(response.data))
+                        console.log(this.blog);
+                        console.log({ ...response.data });
                     } else {
-                        console.log('no ok');
                         this.$router.push({ name: '404' })
                     }
                 })
         }
     },
     beforeRouteUpdate(to) {
+        console.log('to', to);
+
         this.getBlog(to.params.id);
     },
     mounted() {
         this.getBlog(this.$route.params.id);
     }
 }
-DashboardTitle
 </script>
 
 <style>

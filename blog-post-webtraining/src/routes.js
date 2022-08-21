@@ -6,6 +6,7 @@ import PostDetail from "./components/Posts/postDetail";
 import Signin from "./components/User/signin";
 import NotFound from "./components/Utils/notFound";
 import Dashboard from "./components/User/Dashboard";
+import MainDashBoard from "./components/User/Dashboard/main";
 import store from "./store";
 import UserBlogs from "./components/User/Dashboard/Blog";
 import UserPosts from "./components/User/Dashboard/Post";
@@ -22,13 +23,19 @@ const routes = createRouter({
     { path: "/blog/:id", name: "blog", component: Blogs },
     { path: "/posts", name: "posts", component: Posts },
     { path: "/post/:id", name: "postDetail", component: PostDetail },
-    { path: "/signin", name: "signin", component: Signin },
+    {
+      path: "/signin",
+      name: "signin",
+      meta: { signPage: true },
+      component: Signin,
+    },
     {
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
       meta: { requiresAuth: true },
       children: [
+        { path: "", component: MainDashBoard, name: "main-dashboard" },
         { path: "posts", name: "user-posts", component: UserPosts },
         { path: "blogs", name: "user-blogs", component: UserBlogs },
         {
@@ -58,11 +65,15 @@ const routes = createRouter({
 });
 
 routes.beforeEach((to, from, next) => {
-  store.dispatch('auth/autoLogin').then(() => {
-    if (to.meta.requiresAuth && !store.getters["auth/getLoggedInStatus"]) {
-      next("/signin");
+  store.dispatch("auth/autoLogin").then(() => {
+    if (to.meta.signPage && store.getters["auth/getLoggedInStatus"]) {
+      next("/dashboard");
     } else {
-      next();
+      if (to.meta.requiresAuth && !store.getters["auth/getLoggedInStatus"]) {
+        next("/signin");
+      } else {
+        next();
+      }
     }
   });
 });

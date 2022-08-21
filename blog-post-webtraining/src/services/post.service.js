@@ -1,4 +1,5 @@
 import api from './api';
+import jwtInterceptor from './setupInterceptors';
 
 class PostService {
     getAll() {
@@ -10,15 +11,15 @@ class PostService {
     }
 
     createPost(post) {
-        return api.post(`blogs/posts/${post.blogId}`, post)
+        return jwtInterceptor.post(`blogs/posts/${post.blogId}`, post)
     }
 
-    updatePost(id, blog) {
-        return api.put(`blogs/${id}`, blog)
+    updatePost(id, post) {
+        return jwtInterceptor.put(`blogs/${id}`, post)
     }
 
     deletePost(blogId, postId) {
-        return api.delete(`blogs/${blogId}/posts/${postId}`)
+        return jwtInterceptor.delete(`blogs/${blogId}/posts/${postId}`)
     }
 }
 

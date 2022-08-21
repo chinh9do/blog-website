@@ -1,5 +1,6 @@
 import { errorNotify, successNotify } from "@/shared/notifications";
 import PostService from "@/services/post.service";
+import tokenService from "@/services/token.service";
 
 const postsModule = {
   namespaced: true,
@@ -61,6 +62,15 @@ const postsModule = {
   },
   mutations: {},
   actions: {
+    async createPost({ commit }, post) {
+      try {
+        await PostService.createPost(post);
+        successNotify(commit);
+      } catch (error) {
+        errorNotify(commit, error.message);
+      }
+    },
+
     async getPostById({ commit, state }, postId) {
       try {
         // TODO: Handle API to get post
@@ -70,6 +80,27 @@ const postsModule = {
       } catch (error) {
         errorNotify(commit, error.message);
       }
+    },
+    async updatePost({ commit }, post) {
+      try {
+        await PostService.updatePost(post);
+        successNotify(commit);
+      } catch (error) {
+        errorNotify(commit, error.message);
+      }
+    },
+    async removePostById({ commit }, payload) {
+      try {
+        await PostService.deletePost(payload.blogId, payload.postId);
+        successNotify(commit);
+      } catch (error) {
+        errorNotify(commit, error.message);
+      }
+    },
+
+    getUserBlog() {
+      const userId = tokenService.getUserId();
+      
     },
   },
 };

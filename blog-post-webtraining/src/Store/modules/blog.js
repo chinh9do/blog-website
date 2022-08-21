@@ -35,14 +35,16 @@ const blogsModule = {
         errorNotify(commit, error.message);
       }
     },
-    // async getBlogByUserId({ commit }, userId) {
-    //   try {
-    //     const blogs = await BlogService.getByUserId();
-    //     commit("setBlogs", blogs);
-    //   } catch (error) {
-    //     errorNotify(commit, error.message);
-    //   }
-    // },
+    async getBlogByUserId({ commit }) {
+      try {
+        const userId = TokenService.getUserId();
+        const blogs = await BlogService.getByUserId(userId);
+        // commit("setBlogs", blogs);
+        return blogs;
+      } catch (error) {
+        errorNotify(commit, error.message);
+      }
+    },
     async addBlog({ commit }, blog) {
       try {
         blog.userId = TokenService.getUserId();
@@ -64,11 +66,12 @@ const blogsModule = {
     },
     async removeBlogById({ commit, state }, id) {
       try {
-        await BlogService.deleteBlog(id);
-        const newBlogs = state.allBlogs.filters((b) => b.id !== id);
-        commit("setBlogs", newBlogs);
+        const response = await BlogService.deleteBlog(id);
+        // const newBlogs = state.allBlogs.filters((b) => b.id !== id);
+        // commit("setBlogs", newBlogs);
         // TODO
-        successNotify(commit);
+        successNotify(commit, "Delete Successfully");
+        // successNotify(commit);
       } catch (error) {
         errorNotify(commit, error.message);
       }

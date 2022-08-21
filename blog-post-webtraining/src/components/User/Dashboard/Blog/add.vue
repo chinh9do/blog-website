@@ -36,7 +36,6 @@ export default {
         }
     },
     methods: {
-
         onSubmit(values, { resetForm }) {
             this.$store.dispatch('blog/addBlog', values)
             resetForm();
