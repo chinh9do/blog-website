@@ -62,6 +62,15 @@ const postsModule = {
   },
   mutations: {},
   actions: {
+    async getPosts({ commit }) {
+      try {
+        const userId = tokenService.getUserId();
+        return await PostService.getAll(userId);
+      } catch (error) {
+        errorNotify(commit, error.message);
+      }
+    },
+
     async createPost({ commit }, post) {
       try {
         await PostService.createPost(post);
@@ -100,7 +109,7 @@ const postsModule = {
 
     getUserBlog() {
       const userId = tokenService.getUserId();
-      
+
     },
   },
 };

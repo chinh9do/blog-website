@@ -63,7 +63,7 @@ export default {
             })
         }
     },
-    beforeMount() {
+    mounted() {
         this.getBlogs();
     }
 }

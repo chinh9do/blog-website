@@ -38,9 +38,8 @@ const blogsModule = {
     async getBlogByUserId({ commit }) {
       try {
         const userId = TokenService.getUserId();
-        const blogs = await BlogService.getByUserId(userId);
+        return await BlogService.getByUserId(userId);
         // commit("setBlogs", blogs);
-        return blogs;
       } catch (error) {
         errorNotify(commit, error.message);
       }

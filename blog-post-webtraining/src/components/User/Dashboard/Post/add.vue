@@ -3,7 +3,7 @@
         <dashboard-title :title="'Create post'" />
 
         <div class="">
-            <Form @submit="onSubmit" :validation-schema="blog">
+            <Form @submit="onSubmit" :validation-schema="post">
                 <div class="form-group">
                     <Field name="blogId" v-slot="{ field, errors }" value="Select a Blog">
                         <select class="form-select" v-bind="field" :class="{ 'is-invalid': errors.length !== 0 }">
@@ -16,18 +16,24 @@
                             {{ errors[0] }}
                         </div>
                     </Field>
+                </div>
 
-                    <Field name="postTitle" value="Giật tít câu view" v-slot="{ field, errors }">
-                        <textarea type="text" class="form-control" id="postTitle" placeholder="Post title"
-                            v-bind="field" :class="{ 'is-invalid': errors.length !== 0 }"></textarea>
+                <div class="form-group">
+                    <Field name="title" value="Giật tít câu view" v-slot="{ field, errors }">
+                        <input type="text" class="form-control" id="title" placeholder="Title" v-bind="field"
+                            :class="{ 'is-invalid': errors.length !== 0 }" />
                         <div class="input_alert" v-if="errors.length !== 0">
                             {{ errors[0] }}
                         </div>
                     </Field>
+                </div>
 
-                    <Field name="postContent" value="<p>post content</p>" v-slot="{ field, errors }">
-                        <textarea type="text" class="form-control" id="postContent" placeholder="Post Content"
-                            v-bind="field" :class="{ 'is-invalid': errors.length !== 0 }"></textarea>
+                <div class="form-group">
+                    <Field name="content" value="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+                    </p>" v-slot="{ field, errors }">
+                        <textarea type="text" class="form-control" id="content" placeholder="Content" v-bind="field"
+                            :class="{ 'is-invalid': errors.length !== 0 }"></textarea>
                         <div class="input_alert" v-if="errors.length !== 0">
                             {{ errors[0] }}
                         </div>
@@ -50,27 +56,32 @@ export default {
     data() {
         return {
             post: {
-                name: yup.string().required('Blog Name is required'),
-                userId: yup.string()
+                blogId: yup.string().notOneOf(['Select a Blog'], "Blog is required"),
+                title: yup.string().required('Title is required'),
+                content: yup.string().required('Content is required').min(50)
             },
             userBlogs: null
         }
     },
     methods: {
         onSubmit(values, { resetForm }) {
+            console.log(values);
             this.$store.dispatch('post/createPost', values)
             resetForm();
             this.$router.push({ name: 'user-posts' })
         },
-        async getUserBlogs() {
-            const response = await this.$store.dispatch('blog/getBlogByUserId', values);
-            this.userBlogs = response;
+        getUserBlogs() {
+            this.$store.dispatch('blog/getBlogByUserId').then((response) => {
+                if (response.data) {
+                    this.userBlogs = response.data;
+                }
+            });
 
-        }, 
-        mounted() {
-            this.getUserBlogs();
         },
-    }
+    },
+    mounted() {
+        this.getUserBlogs();
+    },
 }
 DashboardTitle
 </script>

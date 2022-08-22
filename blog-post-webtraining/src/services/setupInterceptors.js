@@ -19,7 +19,6 @@ jwtInterceptor.interceptors.request.use((config) => {
 
 jwtInterceptor.interceptors.response.use(
   (response) => {
-    console.log(response, 'response')
     return response;
   },
   async (error) => {

@@ -41,9 +41,10 @@ export default {
         onSubmit(values) {
             values.userId = TokenService.getUserId();
             values.id = this.$route.params.id;
-            console.log('s',values);
 
-            this.$store.dispatch('blog/updateBlog', values)
+            this.$store.dispatch('blog/updateBlog', values).then(() => {
+                this.$router.push({ name: 'user-blogs' })
+            })
         },
         async getBlog(id) {
             // const response = await this.$store.dispatch('blog/getBlogById', id)
@@ -53,19 +54,16 @@ export default {
                 .then((response) => {
                     if (response.data) {
                         this.blog = response.data //JSON.parse(JSON.stringify(response.data))
-                        console.log(this.blog);
-                        console.log({ ...response.data });
                     } else {
                         this.$router.push({ name: '404' })
                     }
                 })
         }
     },
-    beforeRouteUpdate(to) {
-        console.log('to', to);
+    // beforeRouteUpdate(to) {
 
-        this.getBlog(to.params.id);
-    },
+    //     this.getBlog(to.params.id);
+    // },
     mounted() {
         this.getBlog(this.$route.params.id);
     }
