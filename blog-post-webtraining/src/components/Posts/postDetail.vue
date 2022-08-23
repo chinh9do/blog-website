@@ -12,7 +12,7 @@
             </div>
             <hr />
             <h1> {{ post.title }}</h1>
-            <div class="editor" v-html="post.shortContent"></div>
+            <div class="editor" v-html="post.content"></div>
         </div>
     </div>
 </template>
@@ -22,17 +22,17 @@ import { mapActions } from 'vuex';
 export default {
     data() {
         return {
-            post: {}
+            post: null
         }
     },
     methods: {
         ...mapActions('post', ['getPostById'])
     },
-    mounted() {
+    beforeMount() {
         this.getPostById(this.$route.params.id)
-            .then((post) => {
-                if (post) {
-                    this.post = post;
+            .then((response) => {
+                if (response.data) {
+                    this.post = response.data;
                 } else {
                     this.$router.push({ name: '404' });
                 }

@@ -65,7 +65,7 @@ const authModule = {
     refreshToken({ commit }, payload) {
       commit("loginSuccess");
       commit("saveAuth", payload);
-      TokenService.saveAuth(payload.data);
+      TokenService.saveAuth(payload);
     },
 
     autoLogin({ commit }) {

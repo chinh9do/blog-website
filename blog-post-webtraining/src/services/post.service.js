@@ -10,12 +10,16 @@ class PostService {
         return api.get(`/blogs/posts/${blogId}`);
     }
 
+    getById(postId) {
+        return api.get(`/blogs/posts=${postId}`);
+    }
+
     createPost(post) {
         return jwtInterceptor.post(`blogs/posts/${post.blogId}`, post)
     }
 
-    updatePost(id, post) {
-        return jwtInterceptor.put(`blogs/${id}`, post)
+    updatePost(post) {
+        return jwtInterceptor.put(`blogs/posts`, post)
     }
 
     deletePost(blogId, postId) {

@@ -83,9 +83,9 @@ const postsModule = {
     async getPostById({ commit, state }, postId) {
       try {
         // TODO: Handle API to get post
-        // const post = await PostService.getByPostId(postId);
+        return await PostService.getById(postId);
         // return post;
-        return state.allPosts.find((p) => p.id == postId);
+        // return state.allPosts.find((p) => p.id == postId);
       } catch (error) {
         errorNotify(commit, error.message);
       }

@@ -15,12 +15,7 @@
                             <router-link class="nav-link" :to="{ name: 'user-posts' }">Posts
                             </router-link>
                         </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'signin' }"> Sign In
-                            </router-link>
-                        </li>
                     </ul>
-
                 </div>
             </div>
             <main class="col-md-10">
@@ -35,6 +30,7 @@
 }
 
 .dashboard-sidebar {
+    height: 100%;
     position: relative;
     top: 0;
     padding-top: .5rem;

@@ -34,14 +34,14 @@
             <!-- All posts -->
             <div class="col-md-9 col-sm-12">
                 <div class="row">
-                    <div class="col-md-6 post-card" v-for="post in allPosts" :key="post.id">
+                    <div v-if="allPosts" class="col-md-6 post-card" v-for="post in allPosts" :key="post.id">
                         <router-link :to="{ name: 'postDetail', params: { id: post.id } }">
                             <div class="card">
                                 <img class="card-img-top" src="http://placebeard.it/300/100" alt="Card image cap" />
                                 <div class="card-body">
                                     <h5 class="card-title">{{ post.title }}</h5>
                                     <p class="card-text">
-                                        {{ post.shortContent }}
+                                        {{ post.content }}
                                     </p>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
 
 <script>
 import appCarrousel from "../Utils/carousel";
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
     components: {
@@ -66,11 +66,19 @@ export default {
     },
     data() {
         return {
-
+            allPosts: null
         };
     },
-    computed: {
-        ...mapGetters('post', { allPosts: 'getPosts' })
+
+    methods: {
+        ...mapActions('post', ['getPosts']),
+    },
+    mounted() {
+        this.getPosts().then((response) => {
+            if (response?.data) {
+                this.allPosts = response.data;
+            }
+        });
     }
 };
 </script>

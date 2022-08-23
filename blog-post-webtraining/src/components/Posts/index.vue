@@ -3,14 +3,14 @@
     <div class="post-feed row">
       <div class="col-md-9">
         <div class="post-feed-header">Welcome to Blogs.com</div>
-        <div class="post-feed-item" v-for="post in posts" :key="post.id">
+        <div v-if="posts" class="post-feed-item" v-for="post in posts" :key="post.id">
           <div><img src="http://placebeard.it/100/100" /></div>
           <div class="post-feed-item__info">
             <div class="post-info-meta--inline">{{ post.title }}</div>
-            <div class="post-info-title--inline">{{ post.shortContent }}</div>
-            <div class="d-flex post-info-footer--inline">
+            <div v-html="post.content" class="post-info-title--inline"></div>
+            <!-- <div class="d-flex post-info-footer--inline">
               View
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -21,19 +21,24 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
     return {
+      posts: null
     }
   },
-  computed: {
-    ...mapGetters('post', { posts: 'getPosts' })
+  methods: {
+    ...mapActions('post', ['getPosts']),
   },
-  // methods: {
-  //   ...mapActions('post', ['getPosts'])
-  // }
+  mounted() {
+    this.getPosts().then((response) => {
+        if (response?.data) {
+          this.posts = response.data;
+        }
+      });
+  }
 
 }
 
@@ -57,6 +62,7 @@ export default {
 }
 
 .post-info-meta--inline {
+  font-weight: bold;
   display: flex;
 }
 
@@ -65,6 +71,7 @@ export default {
 }
 
 .post-info-footer--inline {
+  padding-top: 15px;
   display: flex;
 }
 </style>
