@@ -24,15 +24,30 @@ class TokenService {
   // }
 
   getExpiredDate() {
-    return jwtDecrypt(this.getAccessToken())?.exp;
+    const token = this.getAccessToken();
+    if (token === null || token === undefined) {
+      return null;
+    }
+
+    return jwtDecrypt(token)?.exp;
   }
 
   getUserId() {
-    return jwtDecrypt(this.getAccessToken())?.Id;
+    const token = this.getAccessToken();
+    if (token === null || token === undefined) {
+      return null;
+    }
+
+    return jwtDecrypt(token)?.Id;
   }
 
   getUserName() {
-    return jwtDecrypt(this.getAccessToken())?.userName;
+    const token = this.getAccessToken();
+    if (token === null || token === undefined) {
+      return null;
+    }
+
+    return jwtDecrypt(token)?.userName;
   }
 
   saveAuth(payload) {

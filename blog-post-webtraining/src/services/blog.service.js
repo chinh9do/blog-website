@@ -12,8 +12,9 @@ class BlogService {
     return api.get(`blogs/userId=${userId}`);
   }
 
-  getById(id) {
-    return api.get(`blogs/${id}`);
+  getById(payload) {
+    console.log(payload.isIncludePosts);
+    return api.get(`blogs/${payload.id}&${payload.isIncludePosts}`);
   }
 
   createBlog(blog) {

@@ -65,7 +65,6 @@ export default {
     },
     methods: {
         onSubmit(values, { resetForm }) {
-            console.log(values);
             this.$store.dispatch('post/createPost', values)
             resetForm();
             this.$router.push({ name: 'user-posts' })

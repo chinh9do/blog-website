@@ -28,9 +28,9 @@ const blogsModule = {
         errorNotify(commit, error.message);
       }
     },
-    async getBlogById({ commit }, blogId) {
+    async getBlogById({ commit }, payload) {
       try {
-        return await BlogService.getById(blogId);
+        return await BlogService.getById(payload);
       } catch (error) {
         errorNotify(commit, error.message);
       }

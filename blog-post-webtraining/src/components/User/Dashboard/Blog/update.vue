@@ -10,7 +10,7 @@
                             <input type="text" class="form-control" id="name" placeholder="Blog Name" v-bind="field"
                                 :class="{ 'is-invalid': errors.length !== 0 }" />
                             <div class="input_alert" v-if="errors.length !== 0">
-                                {{ errors[0] }}
+                                {{  errors[0]  }}
                             </div>
                         </Field>
                     </div>
@@ -56,7 +56,7 @@ export default {
             // const response = await this.$store.dispatch('blog/getBlogById', id)
             // // console.log(response);
             // this.blog = response;
-            this.$store.dispatch('blog/getBlogById', id)
+            this.$store.dispatch('blog/getBlogById', { id: id, isIncludePosts: false })
                 .then((response) => {
                     this.loading = false;
                     if (response.data) {
@@ -67,10 +67,6 @@ export default {
                 })
         }
     },
-    // beforeRouteUpdate(to) {
-
-    //     this.getBlog(to.params.id);
-    // },
     mounted() {
         this.getBlog(this.$route.params.id);
     }

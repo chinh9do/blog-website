@@ -29,7 +29,6 @@ jwtInterceptor.interceptors.response.use(
         "Authorization"
       ] = `Bearer ${response.data.accessToken}`;
       // identity server 4 instead of authentication
-      debugger
       return axios(error.config);
     } else {
       return Promise.reject(error);

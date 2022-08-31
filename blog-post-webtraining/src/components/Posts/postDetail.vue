@@ -28,7 +28,7 @@ export default {
     methods: {
         ...mapActions('post', ['getPostById'])
     },
-    beforeMount() {
+    mounted() {
         this.getPostById(this.$route.params.id)
             .then((response) => {
                 if (response.data) {

@@ -5,7 +5,9 @@
             <button class="btn btn-primary" @click="directToCreate">Add Blog</button>
         </div>
         <div class="w-100"></div>
-        <div class="pt-2">
+
+        <Loader v-if="loading" />
+        <div v-else class="pt-2">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -32,11 +34,13 @@
 
 <script>
 import DashboardTitle from '@/components/Utils/dashboardTitle';
+import Loader from '@/components/Utils/loader';
 
 export default {
-    components: { DashboardTitle },
+    components: { DashboardTitle, Loader },
     data() {
         return {
+            loading: true,
             blogs: []
         }
     },
@@ -53,8 +57,10 @@ export default {
             this.$router.push({ name: 'user-update-blog', params: { id: blogId } })
         },
         getBlogs() {
+            this.loading = true;
             this.$store.dispatch('blog/getBlogs').then((response) => {
                 this.blogs = response.data;
+                this.loading = false;
             })
         },
         deleteBlog(blogId) {
