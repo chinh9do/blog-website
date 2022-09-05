@@ -27,9 +27,7 @@
                     <div><img src="http://placebeard.it/100/100" /></div>
                     <div class="post-feed-item__info">
                         <div class="post-info-meta--inline">{{ post.title }}</div>
-                        <div class="post-info-content--inline">
-                            <div v-html="post.content.substring(0, 300) + (post.content.length > 300 ? '...' : '')">
-                            </div>
+                        <div class="post-info-content--inline" v-html="post.content">
                         </div>
                         <div class="d-flex justify-content-end post-info-footer--inline">
                             <div class="mr-auto">Create Date: 10-10-2021</div>

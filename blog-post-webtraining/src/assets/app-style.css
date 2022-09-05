@@ -35,20 +35,26 @@
 }
 
 .post-info-meta--inline {
-  height: 20%;
   font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;    
+  width: 100%;
+  overflow: hidden;
 }
 
 .post-info-content--inline {
-  height: 60%;
-  padding-bottom: 1rem;
-  /* white-space: nowrap; */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  width: 100%;
 }
 
 .post-info-footer--inline {
+  margin-top: 0.5rem;
   padding-right: 1rem;
 }
 
