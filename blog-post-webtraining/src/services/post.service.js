@@ -2,8 +2,8 @@ import api from './api';
 import jwtInterceptor from './setupInterceptors';
 
 class PostService {
-    getAll(userId) {
-        return api.get(`/blogs/posts/${userId}`);
+    getAll() {
+        return api.get(`/blogs/posts`);
     }
 
     getByBlogId(blogId) {

@@ -1,5 +1,4 @@
 // import api from './api';
-import Api from "@meforma/vue-toaster/src/api";
 import jwtInterceptor from "./setupInterceptors";
 import api from "./api";
 

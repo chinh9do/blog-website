@@ -64,8 +64,7 @@ const postsModule = {
   actions: {
     async getPosts({ commit }) {
       try {
-        const userId = tokenService.getUserId();
-        return await PostService.getAll(userId);
+        return await PostService.getAll();
       } catch (error) {
         errorNotify(commit, error.message);
       }
