@@ -1,11 +1,7 @@
 <template>
     <div>
         <dashboard-title title="Blogs" />
-        <div class="pb-2">
-            <button class="btn btn-primary" @click="directToCreate">Add Blog</button>
-        </div>
-        <div class="w-100"></div>
-
+        <base-button :btnName="'Add Blog'" :type="'blog'" :action="'create'"/>
         <Loader v-if="loading" />
         <div v-else class="pt-2">
             <table class="table table-striped">
@@ -22,8 +18,8 @@
                         <th scope="row">{{ index + 1 }}</th>
                         <td>{{ blog.name }}</td>
                         <td>{{ blog.createDate }}</td>
-                        <td><button @click="directToUpdate(blog.id)" class="btn btn-primary btn-sm">Edit</button> |
-                            <button @click="deleteBlog(blog.id)" class="btn btn-sm btn-danger">Delete</button>
+                        <td><button v-if="haveUpdatePermission" @click="directToUpdate(blog.id)" class="btn btn-primary btn-sm">Edit</button> |
+                            <button v-if="haveDeletePermission" @click="deleteBlog(blog.id)" class="btn btn-sm btn-danger">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -35,9 +31,12 @@
 <script>
 import DashboardTitle from '@/components/Utils/dashboardTitle';
 import Loader from '@/components/Utils/loader';
+import BaseButton from '@/components/Utils/buttonPermission';
+import Permissions from "@/shared/constant";
+import TokenService from "@/services/token.service";
 
 export default {
-    components: { DashboardTitle, Loader },
+    components: { DashboardTitle, Loader, BaseButton },
     data() {
         return {
             loading: true,
@@ -45,14 +44,14 @@ export default {
         }
     },
     computed: {
-        // formatDateTime(dateStr) {
-        //     return dateStr.
-        // }
+    haveUpdatePermission() {
+      return TokenService.getTokenInfo()[Permissions.UPDATE_BLOG] !== undefined;
     },
+    haveDeletePermission() {
+      return TokenService.getTokenInfo()[Permissions.DELETE_BLOG] !== undefined;
+    },
+  },
     methods: {
-        directToCreate() {
-            this.$router.push({ name: 'user-create-blog' })
-        },
         directToUpdate(blogId) {
             this.$router.push({ name: 'user-update-blog', params: { id: blogId } })
         },

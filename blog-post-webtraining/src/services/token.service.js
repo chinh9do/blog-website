@@ -32,6 +32,15 @@ class TokenService {
     return jwtDecrypt(token)?.exp;
   }
 
+  getTokenInfo() {
+    const token = this.getAccessToken();
+    if (token === null || token === undefined) {
+      return null;
+    }
+
+    return jwtDecrypt(token);
+  }
+
   getUserId() {
     const token = this.getAccessToken();
     if (token === null || token === undefined) {

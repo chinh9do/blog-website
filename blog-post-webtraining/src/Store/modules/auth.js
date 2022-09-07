@@ -22,6 +22,9 @@ const authModule = {
     getError(state) {
       return state.error;
     },
+    getUserInfo(){
+      return TokenService.getTokenInfo();
+    }
   },
   mutations: {
     loginSuccess(state) {

@@ -15,6 +15,8 @@ import UserAddBlog from "./components/User/Dashboard/Blog/add";
 import UserAddPost from "./components/User/Dashboard/Post/add";
 import UserUpdateBlog from "./components/User/Dashboard/Blog/update";
 import UserUpdatePost from "./components/User/Dashboard/Post/update";
+import Permissions from "./shared/constant";
+import TokenService from "./services/token.service";
 
 const routes = createRouter({
   history: createWebHistory(),
@@ -43,21 +45,45 @@ const routes = createRouter({
           path: "blog/create",
           name: "user-create-blog",
           component: UserAddBlog,
+          beforeEnter: (to, from) => {
+            if (!(TokenService.getTokenInfo()[Permissions.CREATE_BLOG] != null &&
+              TokenService.getTokenInfo()[Permissions.CREATE_BLOG] != undefined)) {
+              return false
+            }
+          }
         },
         {
           path: "blog/update/:id",
           name: "user-update-blog",
           component: UserUpdateBlog,
+          beforeEnter: (to, from) => {
+            if (!(TokenService.getTokenInfo()[Permissions.UPDATE_BLOG] != null &&
+              TokenService.getTokenInfo()[Permissions.UPDATE_BLOG] != undefined)) {
+              return false
+            }
+          }
         },
         {
           path: "post/create",
           name: "user-create-post",
           component: UserAddPost,
+          beforeEnter: (to, from) => {
+            if (!(TokenService.getTokenInfo()[Permissions.CREATE_POST] != null &&
+              TokenService.getTokenInfo()[Permissions.CREATE_POST] != undefined)) {
+              return false
+            }
+          }
         },
         {
           path: "post/update/:id",
           name: "user-update-post",
           component: UserUpdatePost,
+          beforeEnter: (to, from) => {
+            if (!(TokenService.getTokenInfo()[Permissions.UPDATE_BLOG] != null &&
+              TokenService.getTokenInfo()[Permissions.UPDATE_BLOG] != undefined)) {
+              return false
+            }
+          }
         },
       ],
     },
@@ -65,7 +91,7 @@ const routes = createRouter({
   ],
 });
 
-routes.beforeEach((to, from, next) => {
+routes.beforeEach((to, _, next) => {
   store.dispatch("auth/autoLogin").then(() => {
     if (to.meta.signPage && store.getters["auth/getLoggedInStatus"]) {
       next("/dashboard");
